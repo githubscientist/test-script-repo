@@ -7,12 +7,13 @@ on:
       - test-branch  # Specify the branches to trigger the workflow
 
 jobs:
-  example_job:
+  build:
     runs-on: ubuntu-latest
     env:
-      VAR_ONE: "value1"
+      VAR1: "Hello"
     steps:
-      - name: Step with variables
-        run: |
-          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
-          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
+      - name: Set up dynamic environment variable
+        run: echo "DYNAMIC_VAR=${{ env.VAR1 }} World" >> $GITHUB_ENV
+      
+      - name: Use the dynamic environment variable
+        run: echo $DYNAMIC_VAR
