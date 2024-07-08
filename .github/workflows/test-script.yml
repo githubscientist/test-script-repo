@@ -7,14 +7,12 @@ on:
       - test-branch  # Specify the branches to trigger the workflow
 
 jobs:
-  test-script:
+  example_job:
     runs-on: ubuntu-latest
-
+    env:
+      VAR_ONE: "value1"
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Run the script
-      run: |
-        echo "Running script..."
-        ./your-script.sh  # Path to your script
+      - name: Step with variables
+        run: |
+          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
+          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
