@@ -30,4 +30,5 @@ jobs:
         env:
           VAR2: "DYNAMIC ${VAR1}"
         run: echo $VAR2
-
+      - name: Print
+        run: echo $VAR2
