@@ -20,6 +20,19 @@ on:
 #       - name: Print VAR_TWO
 #         run: |
 #             echo "VAR_TWO is: $VAR_TWO"
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     env:
+#       VAR1: "Hello"
+#     steps:
+#       - name: Use the environment variable in a step
+#         env:
+#           VAR2: "DYNAMIC ${VAR1}"
+#         run: echo $VAR2
+#       - name: Print
+#         run: echo $VAR2
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,5 +43,4 @@ jobs:
         env:
           VAR2: "DYNAMIC ${VAR1}"
         run: echo $VAR2
-      - name: Print
-        run: echo $VAR2
+
