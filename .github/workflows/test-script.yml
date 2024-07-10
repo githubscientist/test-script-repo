@@ -95,13 +95,13 @@ jobs:
   example_job:
     runs-on: ubuntu-latest
     env:
-      JOB_LEVEL_ENV: "job_value"  # Job-level scope
+      VAR_ONE: "value1"
     steps:
-    - name: Define dynamic env var
-      run: |
-        echo "DYNAMIC_VAR=${{ env.GLOBAL_ENV }}_suffix" >> $GITHUB_ENV
+      - name: Step with variables
+        run: |
+          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
+          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
 
-    - name: Use dynamic env var
-      run: echo $DYNAMIC_VAR
+
 
 
