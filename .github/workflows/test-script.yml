@@ -131,15 +131,17 @@ on:
 #         run: echo "The full URL is $FULL_URL"
 
 jobs:
-  example:
+  build:
     runs-on: ubuntu-latest
     env:
-      BASE_URL: "https://example.com"
+      FIRST_VAR: first_value
+      SECOND_VAR: ${{ env.FIRST_VAR }}_suffix
     steps:
-      - name: Set Full URL
-        run: echo "FULL_URL=${BASE_URL}/path" >> $GITHUB_ENV
-      - name: Use Full URL
-        run: echo "Full URL is $FULL_URL"  # FULL_URL is available here
+      - name: Use environment variables
+        run: echo "Second var is $SECOND_VAR"
+        env:
+          THIRD_VAR: ${{ env.SECOND_VAR }}_another_suffix
+
 
 
 
