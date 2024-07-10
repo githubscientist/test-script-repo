@@ -62,25 +62,49 @@
 #       - name: Use the variables
 #         run: echo "${{ env.VAR_ONE }} and ${{ env.VAR_TWO }}"
 
-name: Example Conditional Vars
+# name: Example Conditional Vars
+
+# on: [push]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Set initial environment variable
+#         id: init
+#         run: echo "VAR_ONE=Hello" >> $GITHUB_ENV
+
+#       - name: Conditionally set another variable
+#         id: conditional
+#         run: |
+#           if [ "$VAR_ONE" == "Hello" ]; then
+#             echo "VAR_TWO=${VAR_ONE} World" >> $GITHUB_ENV
+#           fi
+
+#       - name: Use environment variables
+#         run: echo "VAR_ONE is ${{ env.VAR_ONE }} and VAR_TWO is ${{ env.VAR_TWO }}"
+
+name: Example using environment variables
 
 on: [push]
 
+env:
+  GLOBAL_ENV: "global_value"  # Global scope
+
 jobs:
-  build:
+  example_job:
     runs-on: ubuntu-latest
+    env:
+      JOB_LEVEL_ENV: "job_value"  # Job-level scope
     steps:
-      - name: Set initial environment variable
-        id: init
-        run: echo "VAR_ONE=Hello" >> $GITHUB_ENV
+    - name: Set environment variable
+      id: vars
+      run: echo "STEP_LEVEL_ENV=step_value" >> $GITHUB_ENV
 
-      - name: Conditionally set another variable
-        id: conditional
-        run: |
-          if [ "$VAR_ONE" == "Hello" ]; then
-            echo "VAR_TWO=${VAR_ONE} World" >> $GITHUB_ENV
-          fi
+    - name: Use environment variables
+      run: |
+        echo "Global Environment Variable: $GLOBAL_ENV"
+        echo "Job Level Environment Variable: $JOB_LEVEL_ENV"
+        echo "Step Level Environment Variable: ${{ env.STEP_LEVEL_ENV }}"
 
-      - name: Use environment variables
-        run: echo "VAR_ONE is ${{ env.VAR_ONE }} and VAR_TWO is ${{ env.VAR_TWO }}"
 
