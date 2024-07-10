@@ -131,16 +131,18 @@ on:
 #         run: echo "The full URL is $FULL_URL"
 
 jobs:
-  build:
+  example:
     runs-on: ubuntu-latest
     env:
-      FIRST_VAR: first_value
+      BASE_ENV: "base_value"
     steps:
-      - name: Declare and use environment variable in a step
-        env:
-          SECOND_VAR: second_value
-          THIRD_VAR: $SECOND_VAR_suffix # This references SECOND_VAR from the same step's env 
-        run: echo "Third var is $THIRD_VAR"
+    - name: Set env and use another
+      run: |
+        echo "DERIVED_ENV=${BASE_ENV}_suffix" >> $GITHUB_ENV
+    - name: Use the environment variable
+      run: |
+        echo "The derived env is $DERIVED_ENV"
+
 
 
 
