@@ -45,7 +45,24 @@
 #         run: echo $API_URL
 
 
-name: Example Workflow
+# name: Example Workflow
+
+# on: [push]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Set Environment Variables
+#         id: set_envs
+#         run: |
+#           echo "VAR_ONE=Hello" >> $GITHUB_ENV
+#           echo "VAR_TWO=${{ env.VAR_ONE }} World" >> $GITHUB_ENV
+
+#       - name: Use the variables
+#         run: echo "${{ env.VAR_ONE }} and ${{ env.VAR_TWO }}"
+
+name: Example Conditional Vars
 
 on: [push]
 
@@ -53,11 +70,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set Environment Variables
-        id: set_envs
-        run: |
-          echo "VAR_ONE=Hello" >> $GITHUB_ENV
-          echo "VAR_TWO=${{ env.VAR_ONE }} World" >> $GITHUB_ENV
+      - name: Set initial environment variable
+        id: init
+        run: echo "VAR_ONE=Hello" >> $GITHUB_ENV
 
-      - name: Use the variables
-        run: echo "${{ env.VAR_ONE }} and ${{ env.VAR_TWO }}"
+      - name: Conditionally set another variable
+        id: conditional
+        run: |
+          if [ "$VAR_ONE" == "Hello" ]; then
+            echo "VAR_TWO=${VAR_ONE} World" >> $GITHUB_ENV
+          fi
+
+      - name: Use environment variables
+        run: echo "VAR_ONE is ${{ env.VAR_ONE }} and VAR_TWO is ${{ env.VAR_TWO }}"
+
