@@ -136,10 +136,12 @@ jobs:
     env:
       BASE_ENV: "base_value"
     steps:
-      - name: Print environment variables
-        run: echo "Using env $ANOTHER_ENV"
-        env:
-          ANOTHER_ENV: ${{ format('{0}_suffix', env.BASE_ENV) }}
+    - name: Set and use variable in a step
+      env:
+        DERIVED_ENV: "${{ env.BASE_ENV }}_suffix"
+      run: |
+        echo "Derived env is $DERIVED_ENV"
+
 
 
 
