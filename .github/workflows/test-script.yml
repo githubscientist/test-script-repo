@@ -136,12 +136,11 @@ jobs:
     env:
       BASE_ENV: "base_value"
     steps:
-    - name: Set env and use another
-      run: |
-        echo "DERIVED_ENV=${BASE_ENV}_suffix" >> $GITHUB_ENV
-    - name: Use the environment variable
-      run: |
-        echo "The derived env is $DERIVED_ENV"
+      - name: Print environment variables
+        run: echo "Using env $ANOTHER_ENV"
+        env:
+          ANOTHER_ENV: ${{ format('{0}_suffix', env.BASE_ENV) }}
+
 
 
 
