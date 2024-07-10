@@ -135,9 +135,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BASE_URL: "https://example.com"
-      FULL_URL: "${BASE_URL}/path"  # This will not work as expected
     steps:
-      - run: echo $FULL_URL  # This will not print the expected combined URL
+      - run: echo "FULL_URL=${BASE_URL}/path" >> $GITHUB_ENV  # Define a new env var based on existing one
+      - run: echo $FULL_URL  # Now this works and prints the combined URL
+
 
 
 
