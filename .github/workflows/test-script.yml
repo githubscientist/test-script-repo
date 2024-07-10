@@ -102,18 +102,34 @@ on:
 #           VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
 #           echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
 
+# jobs:
+#   example:
+#     runs-on: ubuntu-latest
+#     env:
+#       BASE_URL: 'https://example.com'
+#     steps:
+#       - name: Set variables
+#         id: vars
+#         run: echo "URL=${BASE_URL}/path" >> $GITHUB_ENV
+
+#       - name: Use the variable
+#         run: echo "The URL is $URL"
+
 jobs:
   example:
     runs-on: ubuntu-latest
-    env:
-      BASE_URL: 'https://example.com'
     steps:
-      - name: Set variables
-        id: vars
-        run: echo "URL=${BASE_URL}/path" >> $GITHUB_ENV
+      - name: Set base URL
+        id: set_base_url
+        run: echo "BASE_URL=https://example.com" >> $GITHUB_ENV
 
-      - name: Use the variable
-        run: echo "The URL is $URL"
+      - name: Set derived URL
+        id: set_derived_url
+        run: echo "FULL_URL=${{ env.BASE_URL }}/path" >> $GITHUB_ENV
+
+      - name: Use composed URL
+        run: echo "The full URL is $FULL_URL"
+
 
 
 
