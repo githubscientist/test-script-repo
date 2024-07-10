@@ -33,16 +33,17 @@ on:
 #       - name: Print
 #         run: echo $VAR2
 
+env:
+  BASE_URL: https://example.com
+  API_VERSION: v1
+  API_URL: ${{ env.BASE_URL }}/api/${{ env.API_VERSION }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      VAR1: "Hello"
     steps:
-      - name: Set up dynamic environment variable
-        run: echo "DYNAMIC_VAR=${{ env.VAR1 }} World" >> $GITHUB_ENV
-      
-      - name: Use the dynamic environment variable
-        run: echo $DYNAMIC_VAR
+      - name: Print API URL
+        run: echo $API_URL
+
 
 
