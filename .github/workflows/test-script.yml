@@ -135,12 +135,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FIRST_VAR: first_value
-      SECOND_VAR: ${{ env.FIRST_VAR }}_suffix
     steps:
-      - name: Use environment variables
-        run: echo "Second var is $SECOND_VAR"
+      - name: Declare and use environment variable in a step
         env:
-          THIRD_VAR: ${{ env.SECOND_VAR }}_another_suffix
+          SECOND_VAR: second_value
+          THIRD_VAR: $SECOND_VAR_suffix # This references SECOND_VAR from the same step's env 
+        run: echo "Third var is $THIRD_VAR"
+
 
 
 
