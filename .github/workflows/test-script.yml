@@ -97,14 +97,11 @@ jobs:
     env:
       JOB_LEVEL_ENV: "job_value"  # Job-level scope
     steps:
-    - name: Set environment variable
-      id: vars
-      run: echo "STEP_LEVEL_ENV=step_value" >> $GITHUB_ENV
-
-    - name: Use environment variables
+    - name: Define dynamic env var
       run: |
-        echo "Global Environment Variable: $GLOBAL_ENV"
-        echo "Job Level Environment Variable: $JOB_LEVEL_ENV"
-        echo "Step Level Environment Variable: ${{ env.STEP_LEVEL_ENV }}"
+        echo "DYNAMIC_VAR=${{ env.GLOBAL_ENV }}_suffix" >> $GITHUB_ENV
+
+    - name: Use dynamic env var
+      run: echo $DYNAMIC_VAR
 
 
