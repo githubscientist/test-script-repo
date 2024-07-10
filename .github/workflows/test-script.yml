@@ -131,16 +131,14 @@ on:
 #         run: echo "The full URL is $FULL_URL"
 
 jobs:
-  build:
+  example:
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: "https://example.com"
+      FULL_URL: "${BASE_URL}/path"  # This will not work as expected
     steps:
-      - name: Set environment variables
-        run: |
-          echo "BASE_URL=https://example.com" >> $GITHUB_ENV
-          echo "FULL_URL=${{ env.BASE_URL }}/path" >> $GITHUB_ENV
+      - run: echo $FULL_URL  # This will not print the expected combined URL
 
-      - name: Use the derived variable
-        run: echo "The full URL is $FULL_URL"
 
 
 
