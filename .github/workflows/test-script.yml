@@ -1,10 +1,10 @@
-# name: Test Script
+name: Test Script
 
-# on:
-#   push:
-#     branches:
-#       - main
-#       - test-branch  # Specify the branches to trigger the workflow
+on:
+  push:
+    branches:
+      - main
+      - test-branch  # Specify the branches to trigger the workflow
 
 # jobs:
 #   example_job:
@@ -84,24 +84,36 @@
 #       - name: Use environment variables
 #         run: echo "VAR_ONE is ${{ env.VAR_ONE }} and VAR_TWO is ${{ env.VAR_TWO }}"
 
-name: Example using environment variables
+# name: Example using environment variables
 
-on: [push]
+# on: [push]
 
-env:
-  GLOBAL_ENV: "global_value"  # Global scope
+# env:
+#   GLOBAL_ENV: "global_value"  # Global scope
+
+# jobs:
+#   example_job:
+#     runs-on: ubuntu-latest
+#     env:
+#       VAR_ONE: "value1"
+#     steps:
+#       - name: Step with variables
+#         run: |
+#           VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
+#           echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
 
 jobs:
-  example_job:
+  example:
     runs-on: ubuntu-latest
     env:
-      VAR_ONE: "value1"
+      BASE_URL: 'https://example.com'
     steps:
-      - name: Step with variables
-        run: |
-          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
-          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
+      - name: Set variables
+        id: vars
+        run: echo "URL=${BASE_URL}/path" >> $GITHUB_ENV
 
+      - name: Use the variable
+        run: echo "The URL is $URL"
 
 
 
