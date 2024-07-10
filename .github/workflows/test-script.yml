@@ -1,10 +1,10 @@
-name: Test Script
+# name: Test Script
 
-on:
-  push:
-    branches:
-      - main
-      - test-branch  # Specify the branches to trigger the workflow
+# on:
+#   push:
+#     branches:
+#       - main
+#       - test-branch  # Specify the branches to trigger the workflow
 
 # jobs:
 #   example_job:
@@ -33,17 +33,31 @@ on:
 #       - name: Print
 #         run: echo $VAR2
 
-env:
-  BASE_URL: https://example.com
-  API_VERSION: v1
-  API_URL: ${{ env.BASE_URL }}/api/${{ env.API_VERSION }}
+# jobs:
+#   build:
+#     env:
+#       BASE_URL: https://example.com
+#       API_VERSION: v1
+#       API_URL: ${{ env.BASE_URL }}/api/${{ env.API_VERSION }}
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Print API URL
+#         run: echo $API_URL
+
+
+name: Example Workflow
+
+on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Print API URL
-        run: echo $API_URL
+      - name: Set Environment Variables
+        id: set_envs
+        run: |
+          echo "VAR_ONE=Hello" >> $GITHUB_ENV
+          echo "VAR_TWO=${{ env.VAR_ONE }} World" >> $GITHUB_ENV
 
-
-
+      - name: Use the variables
+        run: echo "${{ env.VAR_ONE }} and ${{ env.VAR_TWO }}"
