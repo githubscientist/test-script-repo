@@ -25,6 +25,8 @@ jobs:
         run: |
           echo "VAR1=value1" >> $GITHUB_ENV
           echo "VAR2=$VAR1/additional_path" >> $GITHUB_ENV
+      - name: print
+        run: echo $VAR2
 
 
 
