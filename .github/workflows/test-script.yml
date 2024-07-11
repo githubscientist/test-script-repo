@@ -6,16 +6,26 @@ on:
       - main
       - test-branch  # Specify the branches to trigger the workflow
 
+# jobs:
+#   example-job:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Set environment variables
+#         run: |
+#           echo "FIRST_VAR=Hello" >> $GITHUB_ENV
+#           echo "SECOND_VAR=$FIRST_VAR World" >> $GITHUB_ENV
+#       - name: Print variables
+#         run: echo "$FIRST_VAR $SECOND_VAR"
+
 jobs:
-  example-job:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set environment variables
+      - name: Set up environment variables
         run: |
-          echo "FIRST_VAR=Hello" >> $GITHUB_ENV
-          echo "SECOND_VAR=$FIRST_VAR World" >> $GITHUB_ENV
-      - name: Print variables
-        run: echo "$FIRST_VAR $SECOND_VAR"
+          echo "VAR1=value1" >> $GITHUB_ENV
+          echo "VAR2=$VAR1/additional_path" >> $GITHUB_ENV
+
 
 
 
