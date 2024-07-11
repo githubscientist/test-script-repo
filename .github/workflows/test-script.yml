@@ -70,19 +70,40 @@
 #           FIRST_VAR: Hello
 #           SECOND_VAR: ${{ env.FIRST_VAR }} World  # This won't work directly in `env`, illustrated for clarity
 
+# name: Example Workflow
+# on: [push]
+
+# jobs:
+#   example-job:
+#     runs-on: ubuntu-latest
+#     env:
+#       VAR1: value1
+#     steps:
+#       - name: Set dependent environment variable
+#         run: echo "VAR2=${VAR1}_value2" >> $GITHUB_ENV
+#       - name: Print VAR2
+#         run: echo $VAR2  # VAR2 will be available here
+
 name: Example Workflow
 on: [push]
 
 jobs:
-  example-job:
+  build:
     runs-on: ubuntu-latest
-    env:
-      VAR1: value1
     steps:
-      - name: Set dependent environment variable
-        run: echo "VAR2=${VAR1}_value2" >> $GITHUB_ENV
-      - name: Print VAR2
-        run: echo $VAR2  # VAR2 will be available here
+    - name: Check out repository
+      uses: actions/checkout@v3
+
+    - name: Set environment variables
+      run: |
+        echo "VAR1=Hello" >> $GITHUB_ENV
+        echo "VAR2=${{ env.VAR1 }} World" >> $GITHUB_ENV
+
+    - name: Use environment variables
+      run: echo "VAR2 is $VAR2"
+      env:
+        VAR2: ${{ env.VAR2 }}
+
 
 
 
