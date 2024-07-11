@@ -1,13 +1,13 @@
-# name: Test Script
+name: Test Script
 
-# on:
-#   push:
-#     branches:
-#       - main
-#       - test-branch  # Specify the branches to trigger the workflow
+on:
+  push:
+    branches:
+      - main
+      - test-branch  # Specify the branches to trigger the workflow
 
-name: Example Workflow
-on: [push]
+# name: Example Workflow
+# on: [push]
 
 # jobs:
 #   example-job:
@@ -31,22 +31,45 @@ on: [push]
 #       - name: print
 #         run: echo $VAR2
 
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Check out repository
+#       uses: actions/checkout@v3
+
+#     - name: Set environment variables
+#       run: |
+#         echo "VAR1=Hello" >> $GITHUB_ENV
+#         echo "VAR2=${{ env.VAR1 }} World" >> $GITHUB_ENV
+
+#     - name: Use environment variables
+#       run: echo "VAR2 is $VAR2"
+#       env:
+#         VAR2: ${{ env.VAR2 }}
+
 jobs:
-  build:
+  example-job:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set environment variables
-      run: |
-        echo "VAR1=Hello" >> $GITHUB_ENV
-        echo "VAR2=${{ env.VAR1 }} World" >> $GITHUB_ENV
+      - name: Set up environment variables
+        run: |
+          echo "FIRST_VAR=Hello" >> $GITHUB_ENV
+          echo "SECOND_VAR=${FIRST_VAR} World" >> $GITHUB_ENV
+        env:
+          FIRST_VAR: Hello
 
-    - name: Use environment variables
-      run: echo "VAR2 is $VAR2"
-      env:
-        VAR2: ${{ env.VAR2 }}
+      - name: Display variables
+        run: |
+          echo "First: $FIRST_VAR"
+          echo "Second: $SECOND_VAR"
+        env:
+          FIRST_VAR: Hello
+          SECOND_VAR: ${{ env.FIRST_VAR }} World  # This won't work directly in `env`, illustrated for clarity
+
 
 
 
