@@ -74,21 +74,19 @@ name: Example Workflow
 on: [push]
 
 jobs:
-  build:
+  example-job:
     runs-on: ubuntu-latest
+    env:
+      VAR1: "hello"
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v3
+      - name: Define VAR2
+        run: echo "VAR2=${VAR1} world" >> $GITHUB_ENV
 
-    - name: Set environment variables
-      run: |
-        echo "VAR1=Hello" >> $GITHUB_ENV
-        echo "VAR2=${{ env.VAR1 }} World" >> $GITHUB_ENV
+      - name: Check variables
+        run: |
+          echo "VAR1 is $VAR1"
+          echo "VAR2 is $VAR2"
 
-    - name: Use environment variables
-      run: echo "VAR2 is $VAR2"
-      env:
-        VAR2: ${{ env.VAR2 }}
 
 
 
