@@ -1,10 +1,13 @@
-name: Test Script
+# name: Test Script
 
-on:
-  push:
-    branches:
-      - main
-      - test-branch  # Specify the branches to trigger the workflow
+# on:
+#   push:
+#     branches:
+#       - main
+#       - test-branch  # Specify the branches to trigger the workflow
+
+name: Example Workflow
+on: [push]
 
 # jobs:
 #   example-job:
@@ -17,16 +20,34 @@ on:
 #       - name: Print variables
 #         run: echo "$FIRST_VAR $SECOND_VAR"
 
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Set up environment variables
+#         run: |
+#           echo "VAR1=value1" >> $GITHUB_ENV
+#           echo "VAR2=$VAR1/additional_path" >> $GITHUB_ENV
+#       - name: print
+#         run: echo $VAR2
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up environment variables
-        run: |
-          echo "VAR1=value1" >> $GITHUB_ENV
-          echo "VAR2=$VAR1/additional_path" >> $GITHUB_ENV
-      - name: print
-        run: echo $VAR2
+    - name: Check out repository
+      uses: actions/checkout@v3
+
+    - name: Set environment variables
+      run: |
+        echo "VAR1=Hello" >> $GITHUB_ENV
+        echo "VAR2=${{ env.VAR1 }} World" >> $GITHUB_ENV
+
+    - name: Use environment variables
+      run: echo "VAR2 is $VAR2"
+      env:
+        VAR2: ${{ env.VAR2 }}
+
 
 
 
