@@ -1,10 +1,24 @@
-# name: Test Script
+name: Test Script
 
-# on:
-#   push:
-#     branches:
-#       - main
-#       - test-branch  # Specify the branches to trigger the workflow
+on:
+  push:
+    branches:
+      - main
+      - test-branch  # Specify the branches to trigger the workflow
+
+jobs:
+  example-job:
+    runs-on: ubuntu-latest
+    env:
+      FIRST_VAR: "Hello"
+      SECOND_VAR: "${{ env.FIRST_VAR }} World"  # This won't work as expected
+    steps:
+      - name: Print variables
+        run: echo "$FIRST_VAR $SECOND_VAR"
+
+
+
+
 
 # jobs:
 #   example_job:
@@ -20,6 +34,10 @@
 #       - name: Print VAR_TWO
 #         run: |
 #             echo "VAR_TWO is: $VAR_TWO"
+
+
+
+
 # jobs:
 #   build:
 #     runs-on: ubuntu-latest
@@ -130,31 +148,31 @@
 #       - name: Use composed URL
 #         run: echo "The full URL is $FULL_URL"
 
-name: Example Workflow
+# name: Example Workflow
 
-on:
-  push:
-    branches:
-      - main
-      - test-branch
+# on:
+#   push:
+#     branches:
+#       - main
+#       - test-branch
 
-env:
-  BASE_URL: "https://example.com"
-  API_KEY: "your_api_key_here"
-  FULL_URL: "${{ env.BASE_URL }}/api"
+# env:
+#   BASE_URL: "https://example.com"
+#   API_KEY: "your_api_key_here"
+#   FULL_URL: "${{ env.BASE_URL }}/api"
 
-jobs:
-  example_job:
-    runs-on: ubuntu-latest
+# jobs:
+#   example_job:
+#     runs-on: ubuntu-latest
 
-    env:
-      FULL_URL: "${{ env.FULL_URL }}"  # Use the previously defined environment variable here
+#     env:
+#       FULL_URL: "${{ env.FULL_URL }}"  # Use the previously defined environment variable here
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
 
-      - name: Display Full URL
-        run: echo "Full URL is $FULL_URL"
+#       - name: Display Full URL
+#         run: echo "Full URL is $FULL_URL"
 
-      # Add more steps as needed...
+#       # Add more steps as needed...
