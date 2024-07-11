@@ -9,12 +9,14 @@ on:
 jobs:
   example-job:
     runs-on: ubuntu-latest
-    env:
-      FIRST_VAR: "Hello"
-      SECOND_VAR: "${{ env.FIRST_VAR }} World"  # This won't work as expected
     steps:
+      - name: Set environment variables
+        run: |
+          echo "FIRST_VAR=Hello" >> $GITHUB_ENV
+          echo "SECOND_VAR=$FIRST_VAR World" >> $GITHUB_ENV
       - name: Print variables
         run: echo "$FIRST_VAR $SECOND_VAR"
+
 
 
 
