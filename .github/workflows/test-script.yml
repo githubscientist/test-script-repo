@@ -136,6 +136,7 @@ on:
   push:
     branches:
       - main
+      - test-branch
 
 env:
   BASE_URL: "https://example.com"
