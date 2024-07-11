@@ -86,7 +86,7 @@ jobs:
         echo "VAR2=${{ env.VAR1 }} World" >> $GITHUB_ENV
 
     - name: Use environment variables
-      run: echo "VAR2 is $VAR2"
+      run: echo "$VAR1 is $VAR2"
       env:
         VAR2: ${{ env.VAR2 }}
 
