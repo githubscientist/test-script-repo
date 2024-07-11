@@ -136,37 +136,24 @@ on:
   push:
     branches:
       - main
-      - test-branch
 
 env:
   BASE_URL: "https://example.com"
-  API_VERSION: "v1"
-  FULL_API_URL: ${{ env.BASE_URL }}/api/${{ env.API_VERSION}}
+  API_KEY: "your_api_key_here"
+  FULL_URL: "${{ env.BASE_URL }}/api"
 
 jobs:
-  build:
+  example_job:
     runs-on: ubuntu-latest
 
+    env:
+      FULL_URL: "${{ env.FULL_URL }}"  # Use the previously defined environment variable here
+
     steps:
-      - name: Display Environment Variables
-        run: |
-          echo "Base URL: $BASE_URL"
-          echo "API Version: $API_VERSION"
-          echo "Full API URL: $FULL_API_URL"
+      - name: Checkout code
+        uses: actions/checkout@v2
 
+      - name: Display Full URL
+        run: echo "Full URL is $FULL_URL"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      # Add more steps as needed...
