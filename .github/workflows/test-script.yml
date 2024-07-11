@@ -93,12 +93,13 @@ jobs:
     env:
       FOO: foo
     steps:
-    - name: Set BAR
-      run: echo "BAR=${FOO}bar" >> $GITHUB_ENV
+    - name: Set and use BAR
+      run: |
+        echo "BAR=${FOO}bar" >> $GITHUB_ENV
+        echo "BAR is $BAR"  # This will not work within the same step because $GITHUB_ENV affects future steps.
     - name: Print BAR
       run: echo $BAR
-      env:
-        BAR: ${{ env.FOO }}bar
+
 
 
 
