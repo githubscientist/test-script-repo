@@ -1,10 +1,10 @@
-name: Test Script
+# name: Test Script
 
-on:
-  push:
-    branches:
-      - main
-      - test-branch  # Specify the branches to trigger the workflow
+# on:
+#   push:
+#     branches:
+#       - main
+#       - test-branch  # Specify the branches to trigger the workflow
 
 # jobs:
 #   example_job:
@@ -130,17 +130,30 @@ on:
 #       - name: Use composed URL
 #         run: echo "The full URL is $FULL_URL"
 
+name: Example Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  BASE_URL: "https://example.com"
+  API_VERSION: "v1"
+  FULL_API_URL: ${{ env.BASE_URL }}/api/${{ env.API_VERSION}}
+
 jobs:
-  example:
+  build:
     runs-on: ubuntu-latest
-    env:
-      BASE_ENV: "base_value"
+
     steps:
-    - name: Set and use variable in a step
-      env:
-        DERIVED_ENV: "${{ env.BASE_ENV }}_suffix"
-      run: |
-        echo "Derived env is $DERIVED_ENV"
+      - name: Display Environment Variables
+        run: |
+          echo "Base URL: $BASE_URL"
+          echo "API Version: $API_VERSION"
+          echo "Full API URL: $FULL_API_URL"
+
+
 
 
 
