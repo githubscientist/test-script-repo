@@ -101,18 +101,22 @@
 #       run: echo $BAR
 
 name: Example Workflow
+
 on: [push]
 
 jobs:
-  example_job:
+  build:
     runs-on: ubuntu-latest
+
     env:
-      VAR_ONE: "value1"
+      BASE_URL: "https://example.com"
+
     steps:
-      - name: Step with variables
-        run: |
-          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
-          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
+    - name: Use environment variables in a step
+      env:
+        API_URL: ${{ env.BASE_URL }}/api
+      run: echo "API URL is $API_URL"
+
 
 
 
