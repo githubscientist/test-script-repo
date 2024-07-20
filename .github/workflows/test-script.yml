@@ -105,19 +105,32 @@ name: Example Workflow
 on: [push]
 
 env:
-  GLOBAL_VAR: "Example"
+  WORKFLOW_LEVEL_VAR: "Available to all jobs"
 
 jobs:
-  build:
+  job1:
     runs-on: ubuntu-latest
     env:
-      GLOBAL_ENV: "accessible_everywhere"
+      JOB_LEVEL_VAR: "Available to all steps in job1"
     steps:
-      - name: Use global env at step level with modification
+      - name: Step using variables
         env:
-          LOCAL_ENV: "local_value"
-          COMBINED_ENV: ${{ env.GLOBAL_ENV }}_and_${{ env.LOCAL_ENV }}
-        run: echo $COMBINED_ENV  # Outputs "accessible_everywhere_and_local_value"
+          STEP_LEVEL_VAR: "Only available here"
+          COMPOSED_VAR: ${{ env.WORKFLOW_LEVEL_VAR }}_and_${{ env.JOB_LEVEL_VAR }}
+        run: |
+          echo $WORKFLOW_LEVEL_VAR  # Outputs "Available to all jobs"
+          echo $JOB_LEVEL_VAR  # Outputs "Available to all steps in job1"
+          echo $STEP_LEVEL_VAR  # Outputs "Only available here"
+          echo $COMPOSED_VAR  # Outputs "Available to all jobs_and_Available to all steps in job1"
+
+  job2:
+    runs-on: ubuntu-latest
+    # This job doesn't directly have access to JOB_LEVEL_VAR from job1 because it's a separate job
+    steps:
+      - name: Step illustrating variable access
+        run: |
+          echo $WORKFLOW_LEVEL_VAR  # Outputs "Available to all jobs"
+          echo $JOB_LEVEL_VAR  # Will not output anything for job2 as it's not defined here
 
 
 
