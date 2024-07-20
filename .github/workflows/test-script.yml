@@ -108,13 +108,17 @@ env:
   GLOBAL_VAR: "Example"
 
 jobs:
-  example_job:
+  build:
     runs-on: ubuntu-latest
+    env:
+      GLOBAL_ENV: "accessible_everywhere"
     steps:
-      - name: Define step level environment variable
+      - name: Use global env at step level with modification
         env:
-          STEP_LEVEL_VAR: "Step scope"
-        run: echo $STEP_LEVEL_VAR  # Outputs "Step scope"
+          LOCAL_ENV: "local_value"
+          COMBINED_ENV: ${{ env.GLOBAL_ENV }}_and_${{ env.LOCAL_ENV }}
+        run: echo $COMBINED_ENV  # Outputs "accessible_everywhere_and_local_value"
+
 
 
 
