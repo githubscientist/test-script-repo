@@ -110,11 +110,11 @@ env:
 jobs:
   example_job:
     runs-on: ubuntu-latest
-    env:
-      JOB_LEVEL_VAR: "Job scope"
     steps:
-      - name: Use job level environment variable
-        run: echo $JOB_LEVEL_VAR  # Outputs "Job scope"
+      - name: Define step level environment variable
+        env:
+          STEP_LEVEL_VAR: "Step scope"
+        run: echo $STEP_LEVEL_VAR  # Outputs "Step scope"
 
 
 
