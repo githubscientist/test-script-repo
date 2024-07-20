@@ -108,18 +108,17 @@ env:
   WORKFLOW_LEVEL_VAR: "Available to all jobs"
 
 jobs:
-  example_job:
+  example-job:
     runs-on: ubuntu-latest
-    env:
-      VAR_ONE: "value1"
     steps:
-      - name: Step with variables
+      - name: Set up environment variables
         run: |
-          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
-          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
-
-      - name: print
-        run: echo $VAR_TWO
+          echo "VAR1=value1" >> $GITHUB_ENV
+          echo "VAR2=$VAR1-suffix" >> $GITHUB_ENV
+      - name: Use environment variables
+        run: echo "VAR2 is $VAR2"
+        env:
+          VAR2: ${{ env.VAR2 }}
 
 
 
