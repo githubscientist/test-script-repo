@@ -104,19 +104,16 @@ name: Example Workflow
 
 on: [push]
 
+env:
+  GLOBAL_VAR: "Example"
+
 jobs:
   example_job:
     runs-on: ubuntu-latest
-    env:
-      VAR_ONE: "value1"
-      VAR_THREE: ${{ env.VAR_ONE }}
     steps:
-      - name: Step with variables
-        run: |
-          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
-          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
-      - name: print
-        run: echo $VAR_TWO
+      - name: Use global variable
+        run: echo $GLOBAL_VAR  # Outputs "Example"
+
 
 
 
