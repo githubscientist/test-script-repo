@@ -105,21 +105,16 @@ name: Example Workflow
 on: [push]
 
 jobs:
-  build:
+  example_job:
     runs-on: ubuntu-latest
-
     env:
-      BASE_URL: "https://example.com"
-
+      VAR_ONE: "value1"
     steps:
-    - name: Set up dependent env variables
-      run: echo "##[set-output name=api_url;]${{ env.BASE_URL }}/api"
-      id: vars
-      
-    - name: Use dependent env variable
-      env:
-        API_URL: ${{ steps.vars.outputs.api_url }}
-      run: echo "API URL is $API_URL"
+      - name: Step with variables
+        run: |
+          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
+          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
+
 
 
 
