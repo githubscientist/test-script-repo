@@ -110,13 +110,17 @@ env:
 jobs:
   example-job:
     runs-on: ubuntu-latest
-    env:
-      BASE_URL: "https://example.com"
     steps:
+      - name: Set base URL
+        id: set_base_url
+        run: echo "::set-output name=base_url::https://example.com"
+        
       - name: Set FULL_URL
-        run: echo "FULL_URL=${BASE_URL}/path" >> $GITHUB_ENV
+        run: echo "FULL_URL=${{ steps.set_base_url.outputs.base_url }}/path" >> $GITHUB_ENV
+        
       - name: Print environment variables
-        run: echo "BASE_URL=${BASE_URL} FULL_URL=${FULL_URL}"
+        run: echo "FULL_URL=${FULL_URL}"
+
 
 
 
