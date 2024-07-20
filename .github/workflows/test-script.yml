@@ -108,18 +108,17 @@ env:
   WORKFLOW_LEVEL_VAR: "Available to all jobs"
 
 jobs:
-  example-job:
+  example_job:
     runs-on: ubuntu-latest
+    env:
+      VAR_ONE: "value1"
     steps:
-      - name: Set base URL
-        id: set_base_url
-        run: echo "::set-output name=base_url::https://example.com"
-        
-      - name: Set FULL_URL
-        run: echo "FULL_URL=${{ steps.set_base_url.outputs.base_url }}/path" >> $GITHUB_ENV
-        
-      - name: Print environment variables
-        run: echo "FULL_URL=${FULL_URL}"
+      - name: Step with variables
+        run: |
+          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
+          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
+
+
 
 
 
