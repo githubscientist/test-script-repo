@@ -110,9 +110,11 @@ env:
 jobs:
   example_job:
     runs-on: ubuntu-latest
+    env:
+      JOB_LEVEL_VAR: "Job scope"
     steps:
-      - name: Use global variable
-        run: echo $GLOBAL_VAR  # Outputs "Example"
+      - name: Use job level environment variable
+        run: echo $JOB_LEVEL_VAR  # Outputs "Job scope"
 
 
 
