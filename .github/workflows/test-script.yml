@@ -415,14 +415,14 @@ jobs:
   example-job:
     runs-on: ubuntu-latest
     env:
-      BASE_URL: https://example.com
+      BASE_URL: "https://example.com"
     steps:
       - name: Set derived environment variable
         run: |
-          echo "##[set-output name=FULL_URL;]${{ env.BASE_URL }}/path"
-        shell: bash
-
+          FULL_URL="${BASE_URL}/path"
+          echo "FULL_URL=$FULL_URL" >> $GITHUB_ENV
       - name: Use derived environment variable
         run: echo "The full URL is $FULL_URL"
-        env:
-          FULL_URL: ${{ steps.<step_id>.outputs.FULL_URL }}
+
+
+
