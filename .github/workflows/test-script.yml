@@ -357,6 +357,33 @@
 #           VAR2: ${{ env.VAR2 }} # This will use the value set in the previous step
 
 
+# name: Example Workflow
+
+# on: [push]
+
+# jobs:
+#   example_job:
+#     runs-on: ubuntu-latest
+
+#     env:
+#       VAR1: 'Hello'
+#       VAR2: '${{ env.VAR1 }} World'  # This will not work as expected
+#       VAR3: ${{ env.VAR1 }} World    # This works correctly
+#       VAR4: Hello World              # Direct assignment
+
+#     steps:
+#       - name: Print VAR1
+#         run: echo $VAR1
+
+#       - name: Print VAR2
+#         run: echo $VAR2
+
+#       - name: Print VAR3
+#         run: echo $VAR3
+
+#       - name: Print VAR4
+#         run: echo $VAR4
+
 name: Example Workflow
 
 on: [push]
@@ -364,22 +391,17 @@ on: [push]
 jobs:
   example_job:
     runs-on: ubuntu-latest
-
     env:
       VAR1: 'Hello'
-      VAR2: '${{ env.VAR1 }} World'  # This will not work as expected
-      VAR3: ${{ env.VAR1 }} World    # This works correctly
-      VAR4: Hello World              # Direct assignment
-
+      
     steps:
+      - name: Define VAR3 using VAR1
+        run: |
+          VAR3="${VAR1} World"
+          echo "VAR3=$VAR3" >> $GITHUB_ENV
       - name: Print VAR1
         run: echo $VAR1
-
-      - name: Print VAR2
-        run: echo $VAR2
 
       - name: Print VAR3
         run: echo $VAR3
 
-      - name: Print VAR4
-        run: echo $VAR4
