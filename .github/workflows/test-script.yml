@@ -389,23 +389,14 @@ name: Example Workflow
 on: [push]
 
 jobs:
-  build:
+  example:
     runs-on: ubuntu-latest
-    
-    env:
-      VAR1: value1
-      VAR2: ${{ env.VAR1 }}-suffix # This will not work directly
-
     steps:
-      - name: Set up VAR2
-        run: echo "VAR2=${{ env.VAR1 }}-suffix" >> $GITHUB_ENV
-      
-      - name: Check environment variables
+      - name: Define and use environment variables
         run: |
-          echo "VAR1 is $VAR1"
-          echo "VAR2 is $VAR2"
+          echo "FIRST_VAR=hello" >> $GITHUB_ENV
+          echo "SECOND_VAR=${FIRST_VAR} world" >> $GITHUB_ENV
         env:
-          VAR1: ${{ env.VAR1 }}
-          VAR2: ${{ env.VAR2 }} # This will use the value set in the previous step
+          FIRST_VAR: hello
 
 
