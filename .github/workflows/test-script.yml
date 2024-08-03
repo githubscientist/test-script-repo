@@ -392,11 +392,15 @@ jobs:
   example:
     runs-on: ubuntu-latest
     steps:
-      - name: Define and use environment variables
-        run: |
-          echo "FIRST_VAR=hello" >> $GITHUB_ENV
-          echo "SECOND_VAR=${FIRST_VAR} world" >> $GITHUB_ENV
+      - name: Set FIRST_VAR
+        run: echo "FIRST_VAR=hello" >> $GITHUB_ENV
+
+      - name: Use FIRST_VAR to define SECOND_VAR
+        run: echo "SECOND_VAR=${{ env.FIRST_VAR }} world" >> $GITHUB_ENV
+      
+      - name: Print SECOND_VAR
+        run: echo $SECOND_VAR
         env:
-          FIRST_VAR: hello
+          SECOND_VAR: ${{ env.SECOND_VAR }}
 
 
