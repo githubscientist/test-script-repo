@@ -338,17 +338,13 @@ name: Example Workflow
 on: [push]
 
 jobs:
-  example:
+  example_job:
     runs-on: ubuntu-latest
+    env:
+      VAR_ONE: "value1"
     steps:
-      - name: Set FIRST_VAR
-        run: echo "FIRST_VAR=hello" >> $GITHUB_ENV
-
-      - name: Use FIRST_VAR to define SECOND_VAR
-        run: echo "SECOND_VAR=${{ env.FIRST_VAR }} world" >> $GITHUB_ENV
-      
-      - name: Print SECOND_VAR
-        run: echo $SECOND_VAR
-        env:
-          SECOND_VAR: ${{ env.SECOND_VAR }}
+      - name: Step with variables
+        run: |
+          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
+          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
 
