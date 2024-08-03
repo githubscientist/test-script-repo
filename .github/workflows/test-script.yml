@@ -419,10 +419,11 @@ jobs:
     steps:
       - name: Set derived environment variable
         run: |
-          FULL_URL="${BASE_URL}/path"
-          echo "FULL_URL=$FULL_URL" >> $GITHUB_ENV
+          echo "##[set-output name=FULL_URL;]${{ env.BASE_URL }}/path"
+        shell: bash
       - name: Use derived environment variable
-        run: echo "The full URL is $FULL_URL"
+        run: echo "The full URL is ${{ steps.set-derived-env.outputs.FULL_URL }}"
+
 
 
 
