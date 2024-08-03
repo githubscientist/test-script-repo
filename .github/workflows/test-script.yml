@@ -341,15 +341,10 @@ jobs:
   example_job:
     runs-on: ubuntu-latest
     env:
-      VAR1: 'Hello'
-      
+      VAR_ONE: "value1"
     steps:
-      - name: Define VAR3 using VAR1
+      - name: Step with variables
         run: |
-          VAR3="${VAR1} World"
-          echo "VAR3=$VAR3" >> $GITHUB_ENV
-      - name: Print VAR1
-        run: echo $VAR1
+          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
+          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
 
-      - name: Print VAR3
-        run: echo $VAR3
