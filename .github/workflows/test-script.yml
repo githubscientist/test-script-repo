@@ -389,19 +389,23 @@ name: Example Workflow
 on: [push]
 
 jobs:
-  example_job:
+  build:
     runs-on: ubuntu-latest
+    
     env:
-      VAR1: 'Hello'
-      
-    steps:
-      - name: Define VAR3 using VAR1
-        run: |
-          VAR3="${VAR1} World"
-          echo "VAR3=$VAR3" >> $GITHUB_ENV
-      - name: Print VAR1
-        run: echo $VAR1
+      VAR1: value1
+      VAR2: ${{ env.VAR1 }}-suffix # This will not work directly
 
-      - name: Print VAR3
-        run: echo $VAR3
+    steps:
+      - name: Set up VAR2
+        run: echo "VAR2=${{ env.VAR1 }}-suffix" >> $GITHUB_ENV
+      
+      - name: Check environment variables
+        run: |
+          echo "VAR1 is $VAR1"
+          echo "VAR2 is $VAR2"
+        env:
+          VAR1: ${{ env.VAR1 }}
+          VAR2: ${{ env.VAR2 }} # This will use the value set in the previous step
+
 
