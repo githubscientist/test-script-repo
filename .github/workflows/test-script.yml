@@ -332,19 +332,28 @@
 #         run: echo "Full URL is $FULL_URL"
 
 #       # Add more steps as needed...
-
 name: Example Workflow
 
 on: [push]
 
 jobs:
-  example_job:
+  build:
     runs-on: ubuntu-latest
+    
     env:
-      VAR_ONE: "value1"
+      VAR1: value1
+      VAR2: ${{ env.VAR1 }}-suffix # This will not work directly
+
     steps:
-      - name: Step with variables
+      - name: Set up VAR2
+        run: echo "VAR2=${{ env.VAR1 }}-suffix" >> $GITHUB_ENV
+      
+      - name: Check environment variables
         run: |
-          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
-          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
+          echo "VAR1 is $VAR1"
+          echo "VAR2 is $VAR2"
+        env:
+          VAR1: ${{ env.VAR1 }}
+          VAR2: ${{ env.VAR2 }} # This will use the value set in the previous step
+
 
