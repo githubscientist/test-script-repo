@@ -338,15 +338,13 @@ name: Example Workflow
 on: [push]
 
 jobs:
-  example-job:
+  example:
     runs-on: ubuntu-latest
-    env:
-      BASE_URL: https://example.com
-      ENDPOINT: /api/v1/resource
     steps:
-      - name: Set dependent environment variable
-        run: echo "FULL_URL=$BASE_URL$ENDPOINT" >> $GITHUB_ENV
-      
-      - name: Use FULL_URL
-        run: echo "Full URL is $FULL_URL"
+      - name: Define and use environment variables
+        run: |
+          echo "FIRST_VAR=hello" >> $GITHUB_ENV
+          echo "SECOND_VAR=${FIRST_VAR} world" >> $GITHUB_ENV
+        env:
+          FIRST_VAR: hello
 
