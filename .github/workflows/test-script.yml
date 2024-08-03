@@ -100,29 +100,55 @@
 #     - name: Print BAR
 #       run: echo $BAR
 
+# name: Example Workflow
+
+# on: [push]
+
+# env:
+#   WORKFLOW_LEVEL_VAR: "Available to all jobs"
+
+# jobs:
+#   example:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Set variables
+#         id: vars
+#         run: |
+#           echo "MY_VAR=Hello" >> $GITHUB_ENV
+#           echo "ANOTHER_VAR=${MY_VAR} World" >> $GITHUB_ENV
+
+#       - name: Use environment variables
+#         run: |
+#           echo $MY_VAR
+#           echo $ANOTHER_VAR
+
+
 name: Example Workflow
 
 on: [push]
 
-env:
-  WORKFLOW_LEVEL_VAR: "Available to all jobs"
-
 jobs:
-  example:
+  example_job:
     runs-on: ubuntu-latest
+
+    env:
+      VAR1: 'Hello'
+      VAR2: '${{ env.VAR1 }} World'  # This will not work as expected
+      VAR3: ${{ env.VAR1 }} World    # This works correctly
+      VAR4: Hello World              # Direct assignment
+
     steps:
-      - name: Set variables
-        id: vars
-        run: |
-          echo "MY_VAR=Hello" >> $GITHUB_ENV
-          echo "ANOTHER_VAR=${MY_VAR} World" >> $GITHUB_ENV
+      - name: Print VAR1
+        run: echo $VAR1
 
-      - name: Use environment variables
-        run: |
-          echo $MY_VAR
-          echo $ANOTHER_VAR
+      - name: Print VAR2
+        run: echo $VAR2
 
+      - name: Print VAR3
+        run: echo $VAR3
 
+      - name: Print VAR4
+        run: echo $VAR4
 
 
 
