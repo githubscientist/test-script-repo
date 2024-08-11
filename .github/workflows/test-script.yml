@@ -468,17 +468,30 @@ on: [push]
 #         echo "Full URL is: $FULL_URL"
 #         echo "Another Var is: $ANOTHER_VAR"
 
+# jobs:
+#   my_job:
+#     runs-on: ubuntu-latest
+#     env:
+#       VAR1: "Hello"
+#     steps:
+#       - name: Set VAR2
+#         run: echo "VAR2=${{ env.VAR1 }} World" >> $GITHUB_ENV
+
+#       - name: Use VAR2
+#         run: echo "$VAR2"
+
 jobs:
-  my_job:
+  example_job:
     runs-on: ubuntu-latest
     env:
-      VAR1: "Hello"
+      VAR_ONE: "value1"
     steps:
-      - name: Set VAR2
-        run: echo "VAR2=${{ env.VAR1 }} World" >> $GITHUB_ENV
+      - name: Step with variables
+        run: |
+          VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
+          echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
 
-      - name: Use VAR2
-        run: echo "$VAR2"
+
 
 
 
