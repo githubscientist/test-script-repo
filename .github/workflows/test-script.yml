@@ -452,21 +452,34 @@ name: Example workflow
 
 on: [push]
 
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     env:
+#       BASE_URL: "https://example.com"
+#     steps:
+#     - name: Set dependent variables
+#       run: |
+#         echo "FULL_URL=${BASE_URL}/path" >> $GITHUB_ENV
+#         echo "ANOTHER_VAR=value_of_another_var" >> $GITHUB_ENV
+#     - name: Use environment variables
+#       run: |
+#         echo "Base URL is: $BASE_URL"
+#         echo "Full URL is: $FULL_URL"
+#         echo "Another Var is: $ANOTHER_VAR"
+
 jobs:
-  build:
+  my_job:
     runs-on: ubuntu-latest
     env:
-      BASE_URL: "https://example.com"
+      VAR1: "Hello"
     steps:
-    - name: Set dependent variables
-      run: |
-        echo "FULL_URL=${BASE_URL}/path" >> $GITHUB_ENV
-        echo "ANOTHER_VAR=value_of_another_var" >> $GITHUB_ENV
-    - name: Use environment variables
-      run: |
-        echo "Base URL is: $BASE_URL"
-        echo "Full URL is: $FULL_URL"
-        echo "Another Var is: $ANOTHER_VAR"
+      - name: Set VAR2
+        run: echo "VAR2=${{ env.VAR1 }} World" >> $GITHUB_ENV
+
+      - name: Use VAR2
+        run: echo "$VAR2"
+
 
 
 
