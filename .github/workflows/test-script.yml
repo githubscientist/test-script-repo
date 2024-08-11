@@ -490,7 +490,9 @@ jobs:
         run: |
           VAR_TWO="This will work: $VAR_ONE"  # Expands during execution
           echo "VAR_TWO=$VAR_TWO" >> $GITHUB_ENV
-
+      - name: Print VAR_TWO
+        run: |
+            echo "VAR_TWO is: $VAR_TWO"
 
 
 
