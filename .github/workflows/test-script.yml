@@ -424,6 +424,30 @@
 #       - name: Use derived environment variable
 #         run: echo "The full URL is ${{ steps.set-derived-env.outputs.FULL_URL }}"
 
+# name: Example workflow
+
+# on: [push]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     env:
+#       BASE_URL: "https://example.com"
+#     steps:
+#     - name: Set dependent variables
+#       run: |
+#         echo "##[set-env name=FULL_URL]${BASE_URL}/path"
+#         echo "##[set-env name=ANOTHER_VAR]value_of_another_var"
+#     - name: Use environment variables
+#       run: |
+#         echo "Base URL is: $BASE_URL"
+#         echo "Full URL is: $FULL_URL"
+#         echo "Another Var is: $ANOTHER_VAR"
+#       env:
+#         BASE_URL: ${{ env.BASE_URL }} # re-reference if necessary
+#         FULL_URL: ${{ env.FULL_URL }}
+#         ANOTHER_VAR: ${{ env.ANOTHER_VAR }}
+
 name: Example workflow
 
 on: [push]
@@ -436,17 +460,14 @@ jobs:
     steps:
     - name: Set dependent variables
       run: |
-        echo "##[set-env name=FULL_URL]${BASE_URL}/path"
-        echo "##[set-env name=ANOTHER_VAR]value_of_another_var"
+        echo "FULL_URL=${BASE_URL}/path" >> $GITHUB_ENV
+        echo "ANOTHER_VAR=value_of_another_var" >> $GITHUB_ENV
     - name: Use environment variables
       run: |
         echo "Base URL is: $BASE_URL"
         echo "Full URL is: $FULL_URL"
         echo "Another Var is: $ANOTHER_VAR"
-      env:
-        BASE_URL: ${{ env.BASE_URL }} # re-reference if necessary
-        FULL_URL: ${{ env.FULL_URL }}
-        ANOTHER_VAR: ${{ env.ANOTHER_VAR }}
+
 
 
 
