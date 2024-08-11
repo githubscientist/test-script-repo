@@ -408,21 +408,45 @@
 #           VAR1: ${{ env.VAR1 }}
 #           VAR2: ${{ env.VAR2 }} # This will use the value set in the previous step
 
-name: Example Workflow
+# name: Example Workflow
+# on: [push]
+
+# jobs:
+#   example-job:
+#     runs-on: ubuntu-latest
+#     env:
+#       BASE_URL: "https://example.com"
+#     steps:
+#       - name: Set derived environment variable
+#         run: |
+#           echo "##[set-output name=FULL_URL;]${{ env.BASE_URL }}/path"
+#         shell: bash
+#       - name: Use derived environment variable
+#         run: echo "The full URL is ${{ steps.set-derived-env.outputs.FULL_URL }}"
+
+name: Example workflow
+
 on: [push]
 
 jobs:
-  example-job:
+  build:
     runs-on: ubuntu-latest
     env:
       BASE_URL: "https://example.com"
     steps:
-      - name: Set derived environment variable
-        run: |
-          echo "##[set-output name=FULL_URL;]${{ env.BASE_URL }}/path"
-        shell: bash
-      - name: Use derived environment variable
-        run: echo "The full URL is ${{ steps.set-derived-env.outputs.FULL_URL }}"
+    - name: Set dependent variables
+      run: |
+        echo "##[set-env name=FULL_URL]${BASE_URL}/path"
+        echo "##[set-env name=ANOTHER_VAR]value_of_another_var"
+    - name: Use environment variables
+      run: |
+        echo "Base URL is: $BASE_URL"
+        echo "Full URL is: $FULL_URL"
+        echo "Another Var is: $ANOTHER_VAR"
+      env:
+        BASE_URL: ${{ env.BASE_URL }} # re-reference if necessary
+        FULL_URL: ${{ env.FULL_URL }}
+        ANOTHER_VAR: ${{ env.ANOTHER_VAR }}
 
 
 
