@@ -494,17 +494,30 @@ on: [push]
 #         run: |
 #             echo "VAR_TWO is: $VAR_TWO"
 
+# jobs:
+#   my_job:
+#     runs-on: ubuntu-latest
+#     env:
+#       VAR1: "Hello"
+#     steps:
+#       - name: Set VAR2
+#         run: echo "VAR2=${{ env.VAR1 }} World" >> $GITHUB_ENV
+
+#       - name: Use VAR2
+#         run: echo "$VAR2"
+
 jobs:
-  my_job:
+  example-job:
     runs-on: ubuntu-latest
     env:
       VAR1: "Hello"
     steps:
-      - name: Set VAR2
-        run: echo "VAR2=${{ env.VAR1 }} World" >> $GITHUB_ENV
+      - name: Define VAR2
+        run: echo "VAR2=${VAR1} World" >> $GITHUB_ENV
 
-      - name: Use VAR2
-        run: echo "$VAR2"
+      - name: Show VAR2
+        run: echo "VAR2 is $VAR2"
+
 
 
 
