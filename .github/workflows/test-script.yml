@@ -448,9 +448,9 @@
 #         FULL_URL: ${{ env.FULL_URL }}
 #         ANOTHER_VAR: ${{ env.ANOTHER_VAR }}
 
-name: Example workflow
+# name: Example workflow
 
-on: [push]
+# on: [push]
 
 # jobs:
 #   build:
@@ -518,17 +518,34 @@ on: [push]
 #       - name: Show VAR2
 #         run: echo "VAR2 is $VAR2"
 
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     env:
+#       GREETING: "Hello"
+#       TARGET: "World"
+#       MESSAGE: "${{ env.GREETING }}, ${{ env.TARGET }}!"
+#     steps:
+#       - name: Display Message
+#         run: echo "$MESSAGE"
+
+name: Example Workflow
+on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      GREETING: "Hello"
-      TARGET: "World"
-      MESSAGE: "${{ env.GREETING }}, ${{ env.TARGET }}!"
-    steps:
-      - name: Display Message
-        run: echo "$MESSAGE"
 
+    env:
+      VAR1: "Hello"
+      VAR2: "World"
+
+    steps:
+    - name: Set up environment variables
+      run: |
+        echo "VAR3=${{env.VAR1}} ${{env.VAR2}}" >> $GITHUB_ENV
+    - name: Check environment variables
+      run: echo $VAR3
 
 
 
