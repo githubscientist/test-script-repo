@@ -529,6 +529,24 @@
 #       - name: Display Message
 #         run: echo "$MESSAGE"
 
+# name: Example Workflow
+# on: [push]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     env:
+#       VAR1: "Hello"
+#       VAR2: "World"
+
+#     steps:
+#     - name: Set up environment variables
+#       run: |
+#         echo "VAR3=${{env.VAR1}} ${{env.VAR2}}" >> $GITHUB_ENV
+#     - name: Check environment variables
+#       run: echo $VAR3
+
 name: Example Workflow
 on: [push]
 
@@ -536,16 +554,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      VAR1: "Hello"
-      VAR2: "World"
-
     steps:
     - name: Set up environment variables
-      run: |
-        echo "VAR3=${{env.VAR1}} ${{env.VAR2}}" >> $GITHUB_ENV
-    - name: Check environment variables
+      env:
+        VAR1: "Hello"
+        VAR2: "World"
+        VAR3: "${{ env.VAR1 }} ${{ env.VAR2 }}"
       run: echo $VAR3
+
 
 
 
