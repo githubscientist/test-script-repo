@@ -554,12 +554,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up environment variables
-        run: |
-          echo "VAR1=Hello" >> $GITHUB_ENV
-          echo "VAR2=${VAR1} World" >> $GITHUB_ENV
-      - name: Check environment variables
-        run: echo $VAR2
+      - id: set-var1
+        run: echo "::set-output name=VAR1::Hello"
+      - id: set-var2
+        run: echo "::set-output name=VAR2::${{ steps.set-var1.outputs.VAR1 }} World"
+      - name: Use VAR2
+        run: echo "${{ steps.set-var2.outputs.VAR2 }}"
+
 
 
 
