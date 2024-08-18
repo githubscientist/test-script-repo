@@ -554,12 +554,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - id: set-var1
-        run: echo "::set-output name=VAR1::Hello"
-      - id: set-var2
-        run: echo "::set-output name=VAR2::${{ steps.set-var1.outputs.VAR1 }} World"
-      - name: Use VAR2
-        run: echo "${{ steps.set-var2.outputs.VAR2 }}"
+      - name: Setup environment variables
+        run: |
+          export VARIABLE_ONE=hello
+          export VARIABLE_TWO=${VARIABLE_ONE} world
+        shell: bash
+      - name: Print environment variables
+        run: |
+          echo $VARIABLE_ONE
+          echo $VARIABLE_TWO
+        shell: bash
 
 
 
