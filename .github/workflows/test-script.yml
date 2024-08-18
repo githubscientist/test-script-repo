@@ -554,16 +554,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup environment variables
-        run: |
-          export VARIABLE_ONE=hello
-          export VARIABLE_TWO=${VARIABLE_ONE} world
-        shell: bash
-      - name: Print environment variables
-        run: |
-          echo $VARIABLE_ONE
-          echo $VARIABLE_TWO
-        shell: bash
+      - name: Example step
+        env:
+          VARIABLE_ONE: hello
+          VARIABLE_TWO: "${{ env.VARIABLE_ONE }} world"
+        run: echo $VARIABLE_TWO
+
 
 
 
