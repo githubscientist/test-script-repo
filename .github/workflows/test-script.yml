@@ -551,16 +551,22 @@ name: Example Workflow
 on: [push]
 
 jobs:
-  build:
+  example_job:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        env:
+          FIRST_VAR: "Hello"
     steps:
-    - name: Set up environment variables
-      env:
-        VAR1: "Hello"
-        VAR2: "World"
-        VAR3: "${{ env.VAR1 }} ${{ env.VAR2 }}"
-      run: echo $VAR3
+      - name: Set another variable
+        run: echo "SECOND_VAR=$FIRST_VAR World" >> $GITHUB_ENV
+      - name: Use both variables
+        run: |
+          echo "FIRST_VAR: $FIRST_VAR"
+          echo "SECOND_VAR: $SECOND_VAR"
+
+
+
 
 
 
