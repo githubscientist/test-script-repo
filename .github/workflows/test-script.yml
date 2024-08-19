@@ -553,12 +553,17 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      var2: ${{ steps.set-vars.outputs.VAR2 }}
     steps:
-      - name: Define and Use Variables
+      - name: Set Variables
+        id: set-vars
         run: |
-          VAR1="hello"
-          VAR2="$VAR1 world"
-          echo "$VAR2"
+          echo "::set-output name=VAR1::hello"
+          echo "::set-output name=VAR2::${{ steps.set-vars.outputs.VAR1 }} world"
+      - name: Use VAR2
+        run: echo "${{ needs.build.outputs.var2 }}"
+
 
 
 
