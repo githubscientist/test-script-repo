@@ -554,11 +554,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Example step
-        env:
-          VARIABLE_ONE: hello
-          VARIABLE_TWO: "${{ env.VARIABLE_ONE }} world"
-        run: echo $VARIABLE_TWO
+      - name: Define and Use Variables
+        run: |
+          VAR1="hello"
+          VAR2="$VAR1 world"
+          echo "$VAR2"
+
 
 
 
