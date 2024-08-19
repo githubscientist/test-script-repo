@@ -551,15 +551,17 @@ name: Example Workflow
 on: [push]
 
 jobs:
-  build:
+  example-job:
     runs-on: ubuntu-latest
+    env:
+      VAR1: "Hello"
     steps:
-      - name: Define and Use Environment Variables
-        env:
-          VAR1: hello
-        run: |
-          VAR2="${VAR1} world"
-          echo "VAR2 is $VAR2"
+      - name: Define VAR2
+        run: echo "VAR2=${VAR1} World" >> $GITHUB_ENV
+
+      - name: Show VAR2
+        run: echo "VAR2 is $VAR2"
+
 
 
 
