@@ -550,17 +550,22 @@
 name: Example Workflow
 on: [push]
 
+env:
+  BASE_DIR: '/home/runner/work/myproject'
+
 jobs:
-  example-job:
+  build:
     runs-on: ubuntu-latest
     env:
-      VAR1: "Hello"
+      SRC_DIR: '${{ env.BASE_DIR }}/src'
     steps:
-      - name: Define VAR2
-        run: echo "VAR2=${VAR1} World" >> $GITHUB_ENV
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Show VAR2
-        run: echo "VAR2 is $VAR2"
+      - name: Display Directories
+        run: |
+          echo "Base Directory: $BASE_DIR"
+          echo "Source Directory: $SRC_DIR"
 
 
 
