@@ -554,18 +554,16 @@ env:
   BASE_DIR: '/home/runner/work/myproject'
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     env:
-      SRC_DIR: '${{ env.BASE_DIR }}/src'
+      DEPLOY_ENV: 'production'
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Set Deployment Path
+        env:
+          DEPLOY_PATH: '/var/www/${{ env.DEPLOY_ENV }}'
+        run: echo "Deploying to $DEPLOY_PATH"
 
-      - name: Display Directories
-        run: |
-          echo "Base Directory: $BASE_DIR"
-          echo "Source Directory: $SRC_DIR"
 
 
 
