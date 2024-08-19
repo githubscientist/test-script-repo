@@ -553,12 +553,14 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    variables:
-      VAR1: hello
-      VAR2: ${{ vars.VAR1 }} world
     steps:
-      - name: Print VAR2
-        run: echo "${{ vars.VAR2 }}"
+      - name: Define and Use Environment Variables
+        env:
+          VAR1: hello
+        run: |
+          VAR2="${VAR1} world"
+          echo "VAR2 is $VAR2"
+
 
 
 
